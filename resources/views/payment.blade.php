@@ -40,7 +40,7 @@
 
             <h1 class="text-2xl font-bold">Payment</h1>
             <p class="text-gray-500 dark:text-gray-400 mt-1">
-                Enter amount and generate QR
+                Enter amount and generate QR Visal
             </p>
         </div>
 
