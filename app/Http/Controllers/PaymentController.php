@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Endroid\QrCode\Builder\Builder;
-use Endroid\QrCode\Writer\PngWriter;
-use Endroid\QrCode\Writer\SvgWriter;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel;
+use KHQR\BakongKHQR;
 
 class PaymentController extends Controller
 {
@@ -68,18 +64,17 @@ class PaymentController extends Controller
         $qrError = null;
         if ($qrPayload) {
             try {
-                $writer = extension_loaded('gd') ? new PngWriter : new SvgWriter;
-                $mime = extension_loaded('gd') ? 'image/png' : 'image/svg+xml';
-
-                $qr = new Builder(
-                    writer: $writer,
-                    data: $qrPayload,
-                    encoding: new Encoding('UTF-8'),
-                    errorCorrectionLevel: ErrorCorrectionLevel::Medium,
-                    size: 400,
-                );
-
-                $qrImage = 'data:'.$mime.';base64,'.base64_encode($qr->build()->getString());
+                $khqr = BakongKHQR::forLocalGeneration();
+                $qrImage = $khqr->getQrImageBase64([
+                    'payload' => $qrPayload,
+                    'data' => [
+                        'merchant_name' => 'CHAMRAEUN SOK',
+                        'amount' => $amount,
+                        'currency' => 'USD',
+                    ],
+                    'currency' => 'USD',
+                    'width' => 400,
+                ]);
             } catch (\Throwable $e) {
                 $qrError = $e->getMessage();
                 \Log::error('QR generation failed: '.$qrError);

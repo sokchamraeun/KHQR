@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04cd7e1aa815690fae6452e1fe80d93d",
+    "content-hash": "e89da0e4fd5827f379b91512cf2e5032",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -189,6 +189,59 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "chamroeuntam/bakong-khqr-image",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chamroeuntam/bakong-khqr-image.git",
+                "reference": "1242471bc828eea1358cf389034ce0b9d00e1cab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chamroeuntam/bakong-khqr-image/zipball/1242471bc828eea1358cf389034ce0b9d00e1cab",
+                "reference": "1242471bc828eea1358cf389034ce0b9d00e1cab",
+                "shasum": ""
+            },
+            "require": {
+                "endroid/qr-code": "^6.0",
+                "php": ">=7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "KHQR\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chamroeun Tam",
+                    "email": "chamroeuntam@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A pure PHP implementation of the Bakong KHQR with Image Support",
+            "keywords": [
+                "bakong",
+                "khqr",
+                "qr-code"
+            ],
+            "support": {
+                "issues": "https://github.com/chamroeuntam/bakong-khqr-image/issues",
+                "source": "https://github.com/chamroeuntam/bakong-khqr-image/tree/v2.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.github.com/sponsors/chamroeuntam",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-11-14T13:15:29+00:00"
         },
         {
             "name": "dasprid/enum",
