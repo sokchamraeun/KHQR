@@ -34,14 +34,7 @@ RUN php artisan storage:link || true
 # Permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# Clear caches safely (IMPORTANT for route issues)
-RUN php artisan optimize:clear || true
-
-# Cache only AFTER clean state
-RUN php artisan config:cache || true \
-    && php artisan view:cache || true
-
 EXPOSE 10000
 
-# Production server
-CMD php -S 0.0.0.0:10000 -t public
+# Production server - migrate + seed at runtime (env vars are available)
+CMD php artisan migrate --force && php artisan db:seed --force && php -S 0.0.0.0:10000 -t public
