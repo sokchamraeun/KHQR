@@ -53,7 +53,7 @@
                 <div class="text-center py-8">
                     <div class="text-gray-400 text-2xl mb-2">!</div>
                     <p class="text-gray-500">Failed to generate QR code.</p>
-                    <p class="text-xs text-gray-400 mt-2">{{ session('errors')->first('api_error') ?? 'Please try again' }}</p>
+                    <p class="text-xs text-gray-400 mt-2">{{ $qrError ?? session('errors')->first('api_error') ?? 'Please try again' }}</p>
                 </div>
             @endif
 

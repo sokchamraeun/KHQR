@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\SvgWriter;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
 
@@ -64,22 +65,32 @@ class PaymentController extends Controller
         $qrPayload = $result['data']['qr'] ?? null;
 
         $qrImage = null;
+        $qrError = null;
         if ($qrPayload) {
-            $qr = new Builder(
-                writer: new PngWriter,
-                data: $qrPayload,
-                encoding: new Encoding('UTF-8'),
-                errorCorrectionLevel: ErrorCorrectionLevel::Medium,
-                size: 400,
-            );
+            try {
+                $writer = extension_loaded('gd') ? new PngWriter : new SvgWriter;
+                $mime = extension_loaded('gd') ? 'image/png' : 'image/svg+xml';
 
-            $qrImage = 'data:image/png;base64,'.base64_encode($qr->build()->getString());
+                $qr = new Builder(
+                    writer: $writer,
+                    data: $qrPayload,
+                    encoding: new Encoding('UTF-8'),
+                    errorCorrectionLevel: ErrorCorrectionLevel::Medium,
+                    size: 400,
+                );
+
+                $qrImage = 'data:'.$mime.';base64,'.base64_encode($qr->build()->getString());
+            } catch (\Throwable $e) {
+                $qrError = $e->getMessage();
+                \Log::error('QR generation failed: '.$qrError);
+            }
         }
 
         return view('payment.show', [
             'result' => $result,
             'qrImage' => $qrImage,
             'amount' => $amount,
+            'qrError' => $qrError,
         ]);
     }
 
