@@ -118,7 +118,7 @@
     'name' => 'Laravel',
     'env' => 'production',
     'debug' => false,
-    'url' => 'http://localhost:8000',
+    'url' => 'https://khqr-kuuc.onrender.com',
     'frontend_url' => 'http://localhost:3000',
     'asset_url' => NULL,
     'timezone' => 'UTC',
@@ -475,7 +475,7 @@
       array (
         'driver' => 'local',
         'root' => 'C:\\Users\\sokch\\OneDrive\\Desktop\\Render\\payment\\storage\\app/public',
-        'url' => 'http://localhost:8000/storage',
+        'url' => 'https://khqr-kuuc.onrender.com/storage',
         'visibility' => 'public',
         'throw' => false,
         'report' => false,
@@ -612,7 +612,7 @@
         'username' => NULL,
         'password' => NULL,
         'timeout' => NULL,
-        'local_domain' => 'localhost',
+        'local_domain' => 'khqr-kuuc.onrender.com',
       ),
       'ses' => 
       array (
