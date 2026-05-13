@@ -20,21 +20,28 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Install & build frontend
+# Install frontend
 RUN npm install --ignore-scripts && npm run build
 
-# Storage link (IMPORTANT for images)
+# IMPORTANT: ensure storage exists
+RUN mkdir -p storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views
+
+# Storage link (safe for KHQR images)
 RUN php artisan storage:link || true
 
 # Permissions
 RUN chmod -R 775 storage bootstrap/cache
 
-# Optimize Laravel (safe)
-RUN php artisan config:cache \
-    && php artisan route:cache || true \
+# Clear caches safely (IMPORTANT for route issues)
+RUN php artisan optimize:clear || true
+
+# Cache only AFTER clean state
+RUN php artisan config:cache || true \
     && php artisan view:cache || true
 
 EXPOSE 10000
 
-# ONLY start server (no migrate/seed here)
+# Production server
 CMD php -S 0.0.0.0:10000 -t public
